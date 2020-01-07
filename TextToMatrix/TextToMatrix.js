@@ -84,4 +84,5 @@ Bouillon | Francis | G | M | Blue | 6-3-1975`,
   }
 });
 
+parser.print(" ");
 console.log("\n", "output3:", parser.table, "\n");
