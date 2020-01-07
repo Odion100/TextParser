@@ -20,7 +20,9 @@ const TextMatrix = columns => {
       if (excludeColumn) newRow.splice(excludeColumn, 1);
       //Rearrange row data in accordance to column sort
       if (columnIdices)
-        newRow = columns.map(({ name }) => newRow[columnIdices[name]]);
+        newRow = columns
+          .sort((a, b) => a.index - b.index)
+          .map(({ name }) => newRow[columnIdices[name]]);
       if (typeof beforeInsert === "function") beforeInsert(newRow);
       //insert new data into table
       table.push(newRow);
@@ -45,11 +47,11 @@ const TextMatrix = columns => {
 };
 
 const parser = TextMatrix([
-  { last_name: 0 },
-  { first_name: 1 },
-  { gender: 2 },
-  { date_of_birth: 4 },
-  { favorite_color: 1 }
+  { name: "last_name", index: 0 },
+  { name: "first_name", index: 1 },
+  { name: "gender", index: 2 },
+  { name: "date_of_birth", index: 3 },
+  { name: "favorite_color", index: 4 }
 ]);
 
 parser.addText({
