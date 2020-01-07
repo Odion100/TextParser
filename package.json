@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/Odion100/TextParser/issues"
   },
-  "homepage": "https://github.com/Odion100/TextParser#readme"
+  "homepage": "https://github.com/Odion100/TextParser#readme",
+  "dependencies": {
+    "chai": "^4.2.0"
+  }
 }
