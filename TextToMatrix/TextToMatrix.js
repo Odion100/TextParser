@@ -2,18 +2,30 @@
 const TextToMatrix = () => {
   const table = [];
 
-  const addText = ({ text = [], delimiter, excludeRow }) => {
-    //split by newline
-    const newRows = text.split(/\r?\n/);
+  const addText = ({ text = "", delimiter, excludeColum, columnSort }) => {
+    //split text by newline
+    const dataSet = text.split(/\r?\n/);
     //split by delimeter
-    //insert new row in table
+    dataSet.forEach((delimitedText, i) => {
+      //split by delimeter
+      let newRow = delimitedText.split(delimiter);
+      //remove unwanted column
+
+      //insert new row in table
+    });
   };
 
   const sort = sortIndex => {};
 
+  const print = () =>
+    table.reduce((accumulator, tableRow) => {
+      accumulator += tableRow.join(" ") + "\n";
+    });
+
   return {
     table,
     addText,
-    sort
+    sort,
+    print
   };
 };
