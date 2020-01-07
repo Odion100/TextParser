@@ -17,9 +17,9 @@ const TextToMatrix = () => {
 
   const sort = sortIndex => {};
 
-  const print = () =>
+  const print = (rowDelimiter = "\n", colDelimiter = " ") =>
     table.reduce((accumulator, tableRow) => {
-      accumulator += tableRow.join(" ") + "\n";
+      accumulator += tableRow.join(colDelimiter) + rowDelimiter;
     });
 
   return {
