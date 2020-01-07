@@ -7,7 +7,7 @@ const TextMatrix = columns => {
     text = "",
     delimiter,
     excludeColumn,
-    columnIdices,
+    columnMap,
     beforeInsert
   }) => {
     //split text in to rows by newline
@@ -19,10 +19,10 @@ const TextMatrix = columns => {
       //remove unwanted column
       if (excludeColumn) newRow.splice(excludeColumn, 1);
       //Rearrange row data in accordance to column sort
-      if (columnIdices)
+      if (columnMap)
         newRow = columns
           .sort((a, b) => a.index - b.index)
-          .map(({ name }) => newRow[columnIdices[name]]);
+          .map(({ name }) => newRow[columnMap[name]]);
       if (typeof beforeInsert === "function") beforeInsert(newRow);
       //insert new data into table
       table.push(newRow);
@@ -33,10 +33,13 @@ const TextMatrix = columns => {
 
   const sort = (column, direction) => {};
 
-  const print = (rowDelimiter = "\n", colDelimiter = " ") =>
-    table.reduce((accumulator, tableRow) => {
-      accumulator += tableRow.join(colDelimiter) + rowDelimiter;
+  const print = (colDelimiter = " ", rowDelimiter = "\n") => {
+    let output = "";
+    table.map(tableRow => {
+      output += tableRow.join(colDelimiter) + rowDelimiter;
     });
+    return output;
+  };
 
   return {
     table,
@@ -58,14 +61,14 @@ parser.addText({
   text: `Smith | Steve | D | M | Red | 3-3-1985
 Bonk | Radek | S | M | Green | 6-3-1975
 Bouillon | Francis | G | M | Blue | 6-3-1975`,
-  delimiter: "|"
+  delimiter: " | "
 });
 console.log("\n", "output1:", parser.table, "\n");
 parser.addText({
   text: `Smith | Steve | D | M | Red | 3-3-1985
 Bonk | Radek | S | M | Green | 6-3-1975
 Bouillon | Francis | G | M | Blue | 6-3-1975`,
-  delimiter: "|",
+  delimiter: " | ",
   excludeColumn: 2
 });
 console.log("\n", "output2:", parser.table, "\n");
@@ -74,8 +77,8 @@ parser.addText({
   text: `Smith | Steve | D | M | Red | 3-3-1985
 Bonk | Radek | S | M | Green | 6-3-1975
 Bouillon | Francis | G | M | Blue | 6-3-1975`,
-  delimiter: "|",
-  columnIdices: {
+  delimiter: " | ",
+  columnMap: {
     last_name: 1,
     first_name: 0,
     gender: 3,
@@ -83,6 +86,6 @@ Bouillon | Francis | G | M | Blue | 6-3-1975`,
     favorite_color: 4
   }
 });
-
-parser.print(" ");
 console.log("\n", "output3:", parser.table, "\n");
+
+console.log(parser.print(" "));
