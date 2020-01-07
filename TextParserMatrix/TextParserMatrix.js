@@ -1,5 +1,5 @@
 //Creates a table of
-const TextMatrix = columns => {
+const TextParserMatrix = columns => {
   // columns = [ {column_name:index} ]
   const table = [];
 
@@ -60,45 +60,4 @@ const TextMatrix = columns => {
   };
 };
 
-const parser = TextMatrix([
-  { name: "last_name", index: 0 },
-  { name: "first_name", index: 1 },
-  { name: "gender", index: 2 },
-  { name: "date_of_birth", index: 3 },
-  { name: "favorite_color", index: 4 }
-]);
-
-parser.addText({
-  text: `Smith | Steve | D | M | Red | 3-3-1985
-Bonk | Radek | S | M | Green | 6-3-1975
-Bouillon | Francis | G | M | Blue | 6-3-1975`,
-  delimiter: " | "
-});
-console.log("\n", "output1:", parser.table, "\n");
-parser.addText({
-  text: `Smith | Steve | D | M | Red | 3-3-1985
-Bonk | Radek | S | M | Green | 6-3-1975
-Bouillon | Francis | G | M | Blue | 6-3-1975`,
-  delimiter: " | ",
-  excludeColumn: 2
-});
-console.log("\n", "output2:", parser.table, "\n");
-
-parser.addText({
-  text: `Smith | Steve | D | M | Red | 3-3-1985
-Bonk | Radek | S | M | Green | 6-3-1975
-Bouillon | Francis | G | M | Blue | 6-3-1975`,
-  delimiter: " | ",
-  columnMap: {
-    last_name: 1,
-    first_name: 0,
-    gender: 3,
-    date_of_birth: 5,
-    favorite_color: 4
-  }
-});
-console.log("\n", "output3:", parser.table, "\n");
-
-console.log(parser.print(" "));
-console.log(parser.sort("first_name", -1));
-console.log(parser.table.length);
+module.exports = TextParserMatrix;
