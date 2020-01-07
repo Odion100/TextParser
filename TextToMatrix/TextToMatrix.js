@@ -31,11 +31,22 @@ const TextMatrix = columns => {
     return table;
   };
 
-  const sort = (column, direction) => {};
+  const sort = (column, direction) => {
+    const colIndex = columns.find(col => col.name === column).index;
+    console.log(colIndex);
+    if (colIndex > -1)
+      table.sort((row_a, row_b) => {
+        if (row_a[colIndex] > row_b[colIndex]) return direction * -1;
+        else if (row_a[colIndex] < row_b[colIndex]) return direction;
+        return 0;
+      });
+
+    return table;
+  };
 
   const print = (colDelimiter = " ", rowDelimiter = "\n") => {
     let output = "";
-    table.map(tableRow => {
+    table.sort(tableRow => {
       output += tableRow.join(colDelimiter) + rowDelimiter;
     });
     return output;
@@ -89,3 +100,5 @@ Bouillon | Francis | G | M | Blue | 6-3-1975`,
 console.log("\n", "output3:", parser.table, "\n");
 
 console.log(parser.print(" "));
+console.log(parser.sort("first_name", -1));
+console.log(parser.table.length);
