@@ -18,6 +18,8 @@
   "homepage": "https://github.com/Odion100/TextParser#readme",
   "dependencies": {
     "chai": "^4.2.0",
-    "mocha": "^6.2.0"
+    "mocha": "^6.2.0",
+    "moment": "^2.24.0",
+    "request": "^2.88.0"
   }
 }

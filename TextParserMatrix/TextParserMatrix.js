@@ -33,7 +33,7 @@ const TextParserMatrix = columns => {
 
   const sort = (column, direction) => {
     const colIndex = columns.find(col => col.name === column).index;
-    console.log(colIndex);
+
     if (colIndex > -1)
       table.sort((row_a, row_b) => {
         if (row_a[colIndex] > row_b[colIndex]) return direction * -1;
