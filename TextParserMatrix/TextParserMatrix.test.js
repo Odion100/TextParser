@@ -68,14 +68,8 @@ describe("TextParserMatrix Test", () => {
     expect(parser.table[7]).to.eql(["Radek", "Bonk", "M", "6-3-1975", "Green"]);
   });
 
-  it("should be able to convert table to text with given delimiters", () => {
-    expect(parser.print(" ")).to.equal(
-      `Bonk Radek S M Green 6-3-1975\nBouillon Francis G M Blue 6-3-1975\nSmith Steve M Red 3-3-1985\nBonk Radek M Green 6-3-1975\nBouillon Francis M Blue 6-3-1975\nSteve Smith M 3-3-1985 Red\nRadek Bonk M 6-3-1975 Green\nFrancis Bouillon M 6-3-1975 Blue\n`
-    );
-  });
-
   it("should be able to sort the table by given column and sort direction", () => {
-    expect(parser.sort("first_name", -1)).to.eql([
+    expect(parser.sort("first_name", -1).table).to.eql([
       ["Radek", "Bonk", "M", "6-3-1975", "Green"],
       ["Francis", "Bouillon", "M", "6-3-1975", "Blue"],
       ["Bouillon", "Francis", "G", "M", "Blue", "6-3-1975"],
@@ -86,5 +80,19 @@ describe("TextParserMatrix Test", () => {
       ["Smith", "Steve", "D", "M", "Red", "3-3-1985"],
       ["Smith", "Steve", "M", "Red", "3-3-1985"]
     ]);
+  });
+
+  it("should be able to convert table to text with given delimiters", () => {
+    expect(parser.print()).to.equal(
+      `Radek Bonk M 6-3-1975 Green
+Francis Bouillon M 6-3-1975 Blue
+Bouillon Francis G M Blue 6-3-1975
+Bouillon Francis M Blue 6-3-1975
+Bonk Radek S M Green 6-3-1975
+Bonk Radek M Green 6-3-1975
+Steve Smith M 3-3-1985 Red
+Smith Steve D M Red 3-3-1985
+Smith Steve M Red 3-3-1985`
+    );
   });
 });
