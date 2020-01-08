@@ -1,6 +1,7 @@
 //Creates a table of
+const moment = require("moment");
 const TextParserMatrix = columns => {
-  // columns = [ {column_name:index} ]
+  // columns = [ {name:'', index:0, type:''} ]
   const ParserMatrix = {};
   const table = [];
 
@@ -32,14 +33,27 @@ const TextParserMatrix = columns => {
     return ParserMatrix;
   };
 
-  ParserMatrix.sort = (column, direction) => {
-    const colIndex = columns.find(col => col.name === column).index;
+  ParserMatrix.sort = (column_name, direction) => {
+    const column = columns.find(col => col.name === column_name);
 
-    if (colIndex > -1)
+    if (column.index)
       table.sort((row_a, row_b) => {
-        if (row_a[colIndex] > row_b[colIndex]) return direction * -1;
-        else if (row_a[colIndex] < row_b[colIndex]) return direction;
-        return 0;
+        switch (column.type) {
+          case "date":
+            let date_a = moment(row_a[column.index], column.format);
+            return (
+              moment(row_b[column.index], column.format).diff(date_a) *
+              direction
+            );
+          case "custom":
+            return column.customSort(row_a, row_b);
+          default:
+            if (row_a[column.index] > row_b[column.index])
+              return direction * -1;
+            else if (row_a[column.index] < row_b[column.index])
+              return direction;
+            return 0;
+        }
       });
 
     return ParserMatrix;

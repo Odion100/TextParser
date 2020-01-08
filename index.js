@@ -1,5 +1,6 @@
 const request = require("request");
 const TextParserMatrix = require("./TextParserMatrix/TextParserMatrix");
+
 const dataURIs = [
   "https://s3.amazonaws.com/def-method/code-test/space.txt",
   "https://s3.amazonaws.com/def-method/code-test/comma.txt",
@@ -9,7 +10,7 @@ const parser = TextParserMatrix([
   { name: "last_name", index: 0 },
   { name: "first_name", index: 1 },
   { name: "gender", index: 2 },
-  { name: "date_of_birth", index: 3 },
+  { name: "date_of_birth", index: 3, type: "date", format: "M/D/YYYY" },
   { name: "favorite_color", index: 4 }
 ]);
 
