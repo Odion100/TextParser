@@ -1,9 +1,10 @@
 //Creates a table of
 const TextParserMatrix = columns => {
   // columns = [ {column_name:index} ]
+  const ParserMatrix = {};
   const table = [];
 
-  const addText = ({
+  ParserMatrix.addText = ({
     text = "",
     delimiter,
     excludeColumn,
@@ -28,10 +29,10 @@ const TextParserMatrix = columns => {
       table.push(newRow);
     });
 
-    return table;
+    return ParserMatrix;
   };
 
-  const sort = (column, direction) => {
+  ParserMatrix.sort = (column, direction) => {
     const colIndex = columns.find(col => col.name === column).index;
 
     if (colIndex > -1)
@@ -41,23 +42,20 @@ const TextParserMatrix = columns => {
         return 0;
       });
 
-    return table;
+    return ParserMatrix;
   };
 
-  const print = (colDelimiter = " ", rowDelimiter = "\n") => {
+  ParserMatrix.print = (colDelimiter = " ", rowDelimiter = "\n") => {
     let output = "";
-    table.sort(tableRow => {
+    table.forEach(tableRow => {
       output += tableRow.join(colDelimiter) + rowDelimiter;
     });
-    return output;
+    return output.trim();
   };
 
-  return {
-    table,
-    addText,
-    sort,
-    print
-  };
+  ParserMatrix.table = table;
+
+  return ParserMatrix;
 };
 
 module.exports = TextParserMatrix;
