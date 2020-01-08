@@ -82,20 +82,22 @@ const p3 = new Promise((resolve, reject) => {
 
 Promise.all([p1, p2, p3])
   .then(() => {
+    console.log("\nOutput 1:\n");
     console.log(
-      "Output 1:\n",
       parser
         .sort("last_name", -1)
         .sort("gender", -1)
         .print()
     );
+    console.log("\nOutput 2:\n");
     console.log(
-      "Output 2:\n",
       parser
         .sort("last_name", -1)
         .sort("date_of_birth", -1)
 
         .print()
     );
+    console.log("\nOutput 3:\n");
+    console.log(parser.sort("last_name", 1).print());
   })
   .catch(err => console.log(err));

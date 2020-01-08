@@ -36,7 +36,7 @@ const TextParserMatrix = columns => {
   ParserMatrix.sort = (column_name, direction) => {
     const column = columns.find(col => col.name === column_name);
 
-    if (column.index)
+    if (column.index > -1)
       table.sort((row_a, row_b) => {
         switch (column.type) {
           case "date":
