@@ -2,8 +2,8 @@
 const moment = require("moment");
 const TextParserMatrix = columns => {
   // columns = [ {name:'', index:0, type:''} ]
-  const ParserMatrix = {};
   const table = [];
+  const ParserMatrix = { table, columns };
 
   ParserMatrix.addText = ({
     text = "",
@@ -66,8 +66,6 @@ const TextParserMatrix = columns => {
     });
     return output.trim();
   };
-
-  ParserMatrix.table = table;
 
   return ParserMatrix;
 };

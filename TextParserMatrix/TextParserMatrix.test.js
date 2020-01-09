@@ -16,7 +16,7 @@ describe("TextParserMatrix Test", () => {
   it("should return an object with the following properties and methods:table (Array), addText (fn), sort (fn), toString (fn)", () => {
     expect(parser)
       .to.be.an("Object")
-      .that.has.all.keys("table", "addText", "sort", "toString")
+      .that.has.all.keys("table", "addText", "sort", "toString", "columns")
 
       .that.respondsTo("addText")
       .that.respondsTo("sort")
