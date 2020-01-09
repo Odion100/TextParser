@@ -13,7 +13,7 @@ describe("TextParserMatrix Test", () => {
     { name: "date_of_birth", index: 3 },
     { name: "favorite_color", index: 4 }
   ]);
-  it("should create and return an object with the following properties and methods:table, addText, sort, print", () => {
+  it("should return an object with the following properties and methods:table (Array), addText (fn), sort (fn), print (fn)", () => {
     expect(parser)
       .to.be.an("Object")
       .that.has.all.keys("table", "addText", "sort", "print")
@@ -22,7 +22,7 @@ describe("TextParserMatrix Test", () => {
       .that.respondsTo("sort")
       .that.respondsTo("print");
   });
-  it("should add rows of delimited text to the table", () => {
+  it("should be able to add rows of delimited text to the table property using the addText method", () => {
     parser.addText({
       text,
       delimiter: " | "
@@ -40,7 +40,7 @@ describe("TextParserMatrix Test", () => {
     ]);
   });
 
-  it("should be able to exclude a column of delimited text", () => {
+  it("should be able to exclude a column of delimited text when adding rows of delimited text", () => {
     parser.addText({
       text,
       delimiter: " | ",
@@ -51,7 +51,7 @@ describe("TextParserMatrix Test", () => {
     expect(parser.table[4]).to.eql(["Bonk", "Radek", "M", "Green", "6-3-1975"]);
   });
 
-  it("should be able to map delimited text to specific columns", () => {
+  it("should be able to map delimited text to specific columns when adding rows of delimited text", () => {
     parser.addText({
       text,
       delimiter: " | ",
@@ -68,7 +68,7 @@ describe("TextParserMatrix Test", () => {
     expect(parser.table[7]).to.eql(["Radek", "Bonk", "M", "6-3-1975", "Green"]);
   });
 
-  it("should be able to sort the table by given column and sort direction", () => {
+  it("should be able to sort the table by a given column and a sort direction", () => {
     expect(parser.sort("first_name", -1).table).to.eql([
       ["Radek", "Bonk", "M", "6-3-1975", "Green"],
       ["Francis", "Bouillon", "M", "6-3-1975", "Blue"],
@@ -82,7 +82,7 @@ describe("TextParserMatrix Test", () => {
     ]);
   });
 
-  it("should be able to convert table to text with given delimiters", () => {
+  it("should be able to convert table (Array) to text with optional column and row delimiters", () => {
     expect(parser.print()).to.equal(
       `Radek Bonk M 6-3-1975 Green
 Francis Bouillon M 6-3-1975 Blue
