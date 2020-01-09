@@ -46,7 +46,7 @@ const TextParserMatrix = columns => {
               direction
             );
           case "custom":
-            return column.customSort(row_a, row_b);
+            return column.customSort(row_a[column.index], row_b[column.index]);
           default:
             if (row_a[column.index] > row_b[column.index])
               return direction * -1;
