@@ -59,7 +59,7 @@ const TextParserMatrix = columns => {
     return ParserMatrix;
   };
 
-  ParserMatrix.print = (colDelimiter = " ", rowDelimiter = "\n") => {
+  ParserMatrix.toString = (colDelimiter = " ", rowDelimiter = "\n") => {
     let output = "";
     table.forEach(tableRow => {
       output += tableRow.join(colDelimiter) + rowDelimiter;

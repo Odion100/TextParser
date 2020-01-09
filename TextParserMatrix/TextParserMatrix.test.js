@@ -13,14 +13,14 @@ describe("TextParserMatrix Test", () => {
     { name: "date_of_birth", index: 3 },
     { name: "favorite_color", index: 4 }
   ]);
-  it("should return an object with the following properties and methods:table (Array), addText (fn), sort (fn), print (fn)", () => {
+  it("should return an object with the following properties and methods:table (Array), addText (fn), sort (fn), toString (fn)", () => {
     expect(parser)
       .to.be.an("Object")
-      .that.has.all.keys("table", "addText", "sort", "print")
+      .that.has.all.keys("table", "addText", "sort", "toString")
 
       .that.respondsTo("addText")
       .that.respondsTo("sort")
-      .that.respondsTo("print");
+      .that.respondsTo("toString");
   });
   it("should be able to add rows of delimited text to the table property using the addText method", () => {
     parser.addText({
@@ -83,7 +83,7 @@ describe("TextParserMatrix Test", () => {
   });
 
   it("should be able to convert table (Array) to text with optional column and row delimiters", () => {
-    expect(parser.print()).to.equal(
+    expect(parser.toString()).to.equal(
       `Radek Bonk M 6-3-1975 Green
 Francis Bouillon M 6-3-1975 Blue
 Bouillon Francis G M Blue 6-3-1975
