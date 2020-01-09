@@ -20,7 +20,7 @@ const TextParserMatrix = columns => {
       let newRow = delimitedText.split(delimiter);
       //remove unwanted column
       if (excludeColumn) newRow.splice(excludeColumn, 1);
-      //Rearrange row data in accordance to column sort
+      //Rearrange row data in accordance to column map
       if (columnMap)
         newRow = columns
           .sort((a, b) => a.index - b.index)

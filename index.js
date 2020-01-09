@@ -94,7 +94,6 @@ Promise.all([p1, p2, p3])
       parser
         .sort("last_name", -1)
         .sort("date_of_birth", -1)
-
         .print()
     );
     console.log("\nOutput 3:\n");
