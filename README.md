@@ -9,7 +9,7 @@ As a solution to this problem I created a module called ***TextParserMatrix***. 
 ## Build
 
 1. Ensure that you have NodeJS installed on your OS: https://nodejs.org/en/download/
-2. Download the repo, navigate into the project folder from the commandline window, and run `npm install`.
+2. Download the repo, navigate into the project folder from the command line window, and run `npm install`.
 3. Run `npm start` from the command line to see the code test results printed in the console window.
 
 ## Test
