@@ -1,7 +1,7 @@
 # TextParser 
 
 ## Coding Challange
-As a coding challange, I was tasked with parsing 3 files containing properties of a person each delimited by a different character. I then needed to combined that data into one table and finally print it to the console sorted by different columns. 
+As a coding challange, I was tasked with parsing 3 text files containing properties of a person each delimited by a different character. I then needed to combined that data into one table and finally print it to the console sorted by different columns. 
 
 ## Solution
 As a solution to this problem I created a module called ***TextParserMatrix***. This module facilitates parsing, sorting, printing, and maintaining separate strings of delimited text as one table. This abstraction made solving the coding challange much easier. Also this is something I can see myself adding to and using again in the future. 
