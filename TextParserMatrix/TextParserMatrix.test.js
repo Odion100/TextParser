@@ -4,7 +4,29 @@ const TextParserMatrix = require("./TextParserMatrix");
 const text = `Smith | Steve | D | M | Red | 3-3-1985
 Bonk | Radek | S | M | Green | 6-3-1975
 Bouillon | Francis | G | M | Blue | 6-3-1975`;
-
+const json = [
+  {
+    last_name: "Smith",
+    first_name: "Steve",
+    gender: "D",
+    date_of_birth: "M",
+    favorite_color: "Red"
+  },
+  {
+    last_name: "Bonk",
+    first_name: "Radek",
+    gender: "S",
+    date_of_birth: "M",
+    favorite_color: "Green"
+  },
+  {
+    last_name: "Bouillon",
+    first_name: "Francis",
+    gender: "G",
+    date_of_birth: "M",
+    favorite_color: "Blue"
+  }
+];
 describe("TextParserMatrix Test", () => {
   const parser = TextParserMatrix([
     { name: "last_name", index: 0 },
@@ -20,12 +42,14 @@ describe("TextParserMatrix Test", () => {
         "table",
         "columns",
         "addText",
+        "addJson",
         "sort",
         "toString",
         "toJson"
       )
 
       .that.respondsTo("addText")
+      .that.respondsTo("addJson")
       .that.respondsTo("sort")
       .that.respondsTo("toString")
       .that.respondsTo("toJson");
@@ -105,69 +129,41 @@ Smith Steve M Red 3-3-1985`
   });
 
   it("should be able to convert table (Array) json with / without given property names", () => {
-    expect(parser.toJson()).to.eql([
+    const parser = TextParserMatrix([
+      { name: "last_name", index: 0 },
+      { name: "first_name", index: 1 },
+      { name: "gender", index: 2 },
+      { name: "date_of_birth", index: 3 },
+      { name: "favorite_color", index: 4 }
+    ]);
+
+    parser.addText({
+      text,
+      delimiter: " | "
+    });
+
+    expect(parser.toJson()).to.eql(json);
+    expect(parser.toJson(["ln", "fn", "g", "dob", "fc"])).to.eql([
       {
-        last_name: "Radek",
-        first_name: "Bonk",
-        gender: "M",
-        date_of_birth: "6-3-1975",
-        favorite_color: "Green"
+        ln: "Smith",
+        fn: "Steve",
+        g: "D",
+        dob: "M",
+        fc: "Red"
       },
       {
-        last_name: "Francis",
-        first_name: "Bouillon",
-        gender: "M",
-        date_of_birth: "6-3-1975",
-        favorite_color: "Blue"
+        ln: "Bonk",
+        fn: "Radek",
+        g: "S",
+        dob: "M",
+        fc: "Green"
       },
       {
-        last_name: "Bouillon",
-        first_name: "Francis",
-        gender: "G",
-        date_of_birth: "M",
-        favorite_color: "Blue"
-      },
-      {
-        last_name: "Bouillon",
-        first_name: "Francis",
-        gender: "M",
-        date_of_birth: "Blue",
-        favorite_color: "6-3-1975"
-      },
-      {
-        last_name: "Bonk",
-        first_name: "Radek",
-        gender: "S",
-        date_of_birth: "M",
-        favorite_color: "Green"
-      },
-      {
-        last_name: "Bonk",
-        first_name: "Radek",
-        gender: "M",
-        date_of_birth: "Green",
-        favorite_color: "6-3-1975"
-      },
-      {
-        last_name: "Steve",
-        first_name: "Smith",
-        gender: "M",
-        date_of_birth: "3-3-1985",
-        favorite_color: "Red"
-      },
-      {
-        last_name: "Smith",
-        first_name: "Steve",
-        gender: "D",
-        date_of_birth: "M",
-        favorite_color: "Red"
-      },
-      {
-        last_name: "Smith",
-        first_name: "Steve",
-        gender: "M",
-        date_of_birth: "Red",
-        favorite_color: "3-3-1985"
+        ln: "Bouillon",
+        fn: "Francis",
+        g: "G",
+        dob: "M",
+        fc: "Blue"
       }
     ]);
   });

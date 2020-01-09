@@ -14,7 +14,8 @@ const TextParserMatrix = columns => {
   }) => {
     //split text in to rows by newline
     const dataSet = text.split(/\r?\n/);
-
+    //ensure columns are properly sorted
+    columns.sort((a, b) => a.index - b.index);
     dataSet.forEach(delimitedText => {
       //split each row of text by delimeter
       let newRow = delimitedText.split(delimiter);
@@ -22,9 +23,7 @@ const TextParserMatrix = columns => {
       if (excludeColumn) newRow.splice(excludeColumn, 1);
       //Rearrange row data in accordance to column map
       if (columnMap)
-        newRow = columns
-          .sort((a, b) => a.index - b.index)
-          .map(({ name }) => newRow[columnMap[name]]);
+        newRow = columns.map(({ name }) => newRow[columnMap[name]]);
       if (typeof beforeInsert === "function") beforeInsert(newRow);
       //insert new data into table
       table.push(newRow);
@@ -33,6 +32,21 @@ const TextParserMatrix = columns => {
     return ParserMatrix;
   };
 
+  ParserMatrix.addJson = ({ jsonArr, propertyMap = {}, beforeInsert }) => {
+    //const propetyMap = {column_name: property_name}
+    //ensure columns are properly sorted
+    columns.sort((a, b) => a.index - b.index);
+
+    jsonArr.forEach(obj => {
+      //Arrange row data in accordance to propetyMap (column_name = obj[propety_name])
+      const newRow = columns.map(({ name }) => obj[propertyMap[name] || name]);
+      if (typeof beforeInsert === "function") beforeInsert(newRow);
+      //insert new data into table
+      table.push(newRow);
+    });
+
+    return;
+  };
   ParserMatrix.sort = (column_name, direction) => {
     const column = columns.find(col => col.name === column_name);
 
