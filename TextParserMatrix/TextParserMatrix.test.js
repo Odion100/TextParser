@@ -16,11 +16,19 @@ describe("TextParserMatrix Test", () => {
   it("should return an object with the following properties and methods:table (Array), addText (fn), sort (fn), toString (fn)", () => {
     expect(parser)
       .to.be.an("Object")
-      .that.has.all.keys("table", "addText", "sort", "toString", "columns")
+      .that.has.all.keys(
+        "table",
+        "columns",
+        "addText",
+        "sort",
+        "toString",
+        "toJson"
+      )
 
       .that.respondsTo("addText")
       .that.respondsTo("sort")
-      .that.respondsTo("toString");
+      .that.respondsTo("toString")
+      .that.respondsTo("toJson");
   });
   it("should be able to add rows of delimited text to the table property using the addText method", () => {
     parser.addText({
@@ -94,5 +102,73 @@ Steve Smith M 3-3-1985 Red
 Smith Steve D M Red 3-3-1985
 Smith Steve M Red 3-3-1985`
     );
+  });
+
+  it("should be able to convert table (Array) json with / without given property names", () => {
+    expect(parser.toJson()).to.eql([
+      {
+        last_name: "Radek",
+        first_name: "Bonk",
+        gender: "M",
+        date_of_birth: "6-3-1975",
+        favorite_color: "Green"
+      },
+      {
+        last_name: "Francis",
+        first_name: "Bouillon",
+        gender: "M",
+        date_of_birth: "6-3-1975",
+        favorite_color: "Blue"
+      },
+      {
+        last_name: "Bouillon",
+        first_name: "Francis",
+        gender: "G",
+        date_of_birth: "M",
+        favorite_color: "Blue"
+      },
+      {
+        last_name: "Bouillon",
+        first_name: "Francis",
+        gender: "M",
+        date_of_birth: "Blue",
+        favorite_color: "6-3-1975"
+      },
+      {
+        last_name: "Bonk",
+        first_name: "Radek",
+        gender: "S",
+        date_of_birth: "M",
+        favorite_color: "Green"
+      },
+      {
+        last_name: "Bonk",
+        first_name: "Radek",
+        gender: "M",
+        date_of_birth: "Green",
+        favorite_color: "6-3-1975"
+      },
+      {
+        last_name: "Steve",
+        first_name: "Smith",
+        gender: "M",
+        date_of_birth: "3-3-1985",
+        favorite_color: "Red"
+      },
+      {
+        last_name: "Smith",
+        first_name: "Steve",
+        gender: "D",
+        date_of_birth: "M",
+        favorite_color: "Red"
+      },
+      {
+        last_name: "Smith",
+        first_name: "Steve",
+        gender: "M",
+        date_of_birth: "Red",
+        favorite_color: "3-3-1985"
+      }
+    ]);
   });
 });

@@ -67,6 +67,22 @@ const TextParserMatrix = columns => {
     return output.trim();
   };
 
+  ParserMatrix.toJson = props => {
+    const arr = [];
+    props =
+      props ||
+      columns
+        .sort((col_a, col_b) => col_a.index - col_b.index)
+        .map(column => column.name);
+
+    table.forEach(row => {
+      const obj = {};
+      //the index of each property name lines up with the correct column in the table
+      props.forEach((prop_name, i) => (obj[prop_name] = row[i]));
+      arr.push(obj);
+    });
+    return arr;
+  };
   return ParserMatrix;
 };
 
