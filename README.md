@@ -10,7 +10,7 @@ As a solution to this problem I created a module called ***TextParserMatrix***. 
 
 1. Ensure that you have NodeJS installed on your OS: https://nodejs.org/en/download/
 2. Download the repo, navigate into the project folder from the command line window, and run `npm install`.
-3. Run `npm start` from the command line to see the code test results printed in the console window.
+3. Running `npm start` from the command line will print the code test results in the console window and produce a `target_output.txt` file in the project's root folder.
 
 ## Test
 1. Install mocha globally - `npm install mocha -g`
