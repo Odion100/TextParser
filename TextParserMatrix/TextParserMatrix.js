@@ -32,20 +32,22 @@ const TextParserMatrix = columns => {
     return ParserMatrix;
   };
 
-  ParserMatrix.addJson = ({ jsonArr, propertyMap = {}, beforeInsert }) => {
+  ParserMatrix.addJson = ({ json, propertyMap = {}, beforeInsert }) => {
     //const propetyMap = {column_name: property_name}
+
+    json = Array.isArray(json) ? json : [json];
     //ensure columns are properly sorted
     columns.sort((a, b) => a.index - b.index);
 
-    jsonArr.forEach(obj => {
+    json.forEach(obj => {
       //Arrange row data in accordance to propetyMap (column_name = obj[propety_name])
-      const newRow = columns.map(({ name }) => obj[propertyMap[name] || name]);
+      const newRow = columns.map(({ name }, i) => obj[propertyMap[i] || name]);
       if (typeof beforeInsert === "function") beforeInsert(newRow);
       //insert new data into table
       table.push(newRow);
     });
 
-    return;
+    return ParserMatrix;
   };
   ParserMatrix.sort = (column_name, direction) => {
     const column = columns.find(col => col.name === column_name);
