@@ -86,14 +86,14 @@ Promise.all([p1, p2, p3])
     let output = `Output 1:\n${parser
       .sort("last_name", -1)
       .sort("gender", -1)
-      .print()}
+      .toString()}
 
 Output 2:\n${parser
       .sort("last_name", -1)
       .sort("date_of_birth", -1)
-      .print()}
+      .toString()}
 
-Output 3:\n${parser.sort("last_name", 1).print()}`;
+Output 3:\n${parser.sort("last_name", 1).toString()}`;
 
     console.log(output);
     fs.writeFileSync("./target_output.txt", output);

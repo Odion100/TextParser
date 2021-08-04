@@ -2,8 +2,8 @@
 const moment = require("moment");
 const TextParserMatrix = columns => {
   // columns = [ {name:'', index:0, type:''} ]
-  const ParserMatrix = {};
   const table = [];
+  const ParserMatrix = { table, columns };
 
   ParserMatrix.addText = ({
     text = "",
@@ -14,7 +14,8 @@ const TextParserMatrix = columns => {
   }) => {
     //split text in to rows by newline
     const dataSet = text.split(/\r?\n/);
-
+    //ensure columns are properly sorted
+    columns.sort((a, b) => a.index - b.index);
     dataSet.forEach(delimitedText => {
       //split each row of text by delimeter
       let newRow = delimitedText.split(delimiter);
@@ -22,9 +23,7 @@ const TextParserMatrix = columns => {
       if (excludeColumn) newRow.splice(excludeColumn, 1);
       //Rearrange row data in accordance to column map
       if (columnMap)
-        newRow = columns
-          .sort((a, b) => a.index - b.index)
-          .map(({ name }) => newRow[columnMap[name]]);
+        newRow = columns.map(({ name }) => newRow[columnMap[name]]);
       if (typeof beforeInsert === "function") beforeInsert(newRow);
       //insert new data into table
       table.push(newRow);
@@ -33,6 +32,23 @@ const TextParserMatrix = columns => {
     return ParserMatrix;
   };
 
+  ParserMatrix.addJson = ({ json, propertyMap = {}, beforeInsert }) => {
+    //const propetyMap = {column_name: property_name}
+
+    json = Array.isArray(json) ? json : [json];
+    //ensure columns are properly sorted
+    columns.sort((a, b) => a.index - b.index);
+
+    json.forEach(obj => {
+      //Arrange row data in accordance to propetyMap (column_name = obj[propety_name])
+      const newRow = columns.map(({ name }, i) => obj[propertyMap[i] || name]);
+      if (typeof beforeInsert === "function") beforeInsert(newRow);
+      //insert new data into table
+      table.push(newRow);
+    });
+
+    return ParserMatrix;
+  };
   ParserMatrix.sort = (column_name, direction) => {
     const column = columns.find(col => col.name === column_name);
 
@@ -59,7 +75,7 @@ const TextParserMatrix = columns => {
     return ParserMatrix;
   };
 
-  ParserMatrix.print = (colDelimiter = " ", rowDelimiter = "\n") => {
+  ParserMatrix.toString = (colDelimiter = " ", rowDelimiter = "\n") => {
     let output = "";
     table.forEach(tableRow => {
       output += tableRow.join(colDelimiter) + rowDelimiter;
@@ -67,8 +83,22 @@ const TextParserMatrix = columns => {
     return output.trim();
   };
 
-  ParserMatrix.table = table;
+  ParserMatrix.toJson = props => {
+    const arr = [];
+    props =
+      props ||
+      columns
+        .sort((col_a, col_b) => col_a.index - col_b.index)
+        .map(column => column.name);
 
+    table.forEach(row => {
+      const obj = {};
+      //the index of each property name lines up with the correct column in the table
+      props.forEach((prop_name, i) => (obj[prop_name] = row[i]));
+      arr.push(obj);
+    });
+    return arr;
+  };
   return ParserMatrix;
 };
 
