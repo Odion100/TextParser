@@ -1,6 +1,6 @@
 {
   "name": "textparsermatrix",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "",
   "main": "TextParserMatrix/TextParserMatrix.js",
   "scripts": {
