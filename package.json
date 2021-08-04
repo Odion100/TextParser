@@ -1,8 +1,8 @@
 {
-  "name": "textparser",
-  "version": "1.0.0",
+  "name": "textparsermatrix",
+  "version": "1.0.1",
   "description": "",
-  "main": "index.js",
+  "main": "TextParserMatrix/TextParserMatrix.js",
   "scripts": {
     "test": "mocha ./TextParserMatrix/TextParserMatrix.test.js",
     "start": "node index"
