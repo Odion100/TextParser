@@ -2,10 +2,10 @@
   "name": "textparsermatrix",
   "version": "1.0.2",
   "description": "",
-  "main": "TextParserMatrix/TextParserMatrix.js",
+  "main": "./TextParserMatrix/TextParserMatrix.js",
   "scripts": {
     "test": "mocha ./TextParserMatrix/TextParserMatrix.test.js",
-    "start": "node index"
+    "start": "node ./TextParserMatrix/TextParserMatrix.js"
   },
   "repository": {
     "type": "git",
