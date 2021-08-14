@@ -19,15 +19,15 @@ const TextParserMatrix = (columns) => {
       if (columnMap) newRow = columns.map(({ name }) => newRow[columnMap[name]]);
       if (typeof beforeInsert === "function") beforeInsert(newRow);
       //insert new data into table
-      table.push(newRow);
+      ParserMatrix.table.push(newRow);
     });
 
     return ParserMatrix;
   };
 
-  ParserMatrix.addJson = ({ json, propertyMap = {}, beforeInsert }) => {
+  ParserMatrix.addJson = (json = {} ,{ propertyMap = {}, beforeInsert } = {}) => {
     //const propetyMap = {column_name: property_name}
-
+    
     json = Array.isArray(json) ? json : [json];
     //ensure columns are properly sorted
     columns.sort((a, b) => a.index - b.index);
@@ -37,7 +37,7 @@ const TextParserMatrix = (columns) => {
       const newRow = columns.map(({ name }, i) => obj[propertyMap[i] || name]);
       if (typeof beforeInsert === "function") beforeInsert(newRow);
       //insert new data into table
-      table.push(newRow);
+      ParserMatrix.table.push(newRow);
     });
 
     return ParserMatrix;
@@ -46,7 +46,7 @@ const TextParserMatrix = (columns) => {
     const column = columns.find((col) => col.name === column_name);
 
     if (column.index > -1)
-      table.sort((row_a, row_b) => {
+      ParserMatrix.table.sort((row_a, row_b) => {
         switch (column.type) {
           case "date":
             let date_a = moment(row_a[column.index], column.format);
@@ -65,7 +65,7 @@ const TextParserMatrix = (columns) => {
 
   ParserMatrix.toString = (colDelimiter = " ", rowDelimiter = "\n") => {
     let output = "";
-    table.forEach((tableRow) => {
+    ParserMatrix.table.forEach((tableRow) => {
       output += tableRow.join(colDelimiter) + rowDelimiter;
     });
     return output.trim();
@@ -77,7 +77,7 @@ const TextParserMatrix = (columns) => {
       props ||
       columns.sort((col_a, col_b) => col_a.index - col_b.index).map((column) => column.name);
 
-    table.forEach((row) => {
+    ParserMatrix.table.forEach((row) => {
       const obj = {};
       //the index of each property name lines up with the correct column in the table
       props.forEach((prop_name, i) => (obj[prop_name] = row[i]));
